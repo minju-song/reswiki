@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>회원가입</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body style="background-color: lightblue;">
+    <div class="container">
+        <form class="form">
+            <div class="title" style="display: flex;">
+                <div style="flex: 1;"></div>
+                <div style="flex: 1;">SIGN UP</div>
+                <div style="flex: 1;">🏠</div>
+            </div>
+            <input class="input" name="email" placeholder="Email" type="email">
+            <input class="input" name="password" placeholder="Password" type="password">
+            <button class="button-confirm">Let`s go →</button>
+        </form>
+    </div>
+
+    <script th:src="@{/js/login.js}"></script>
+
+</body>
+</html>

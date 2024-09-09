@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<!--    <meta name="viewport" content="viewport-fit=cover">-->
+    <meta name="format-detection" content="telephone=no">
+<!--    <link rel="apple-touch-icon-precomposed" href=".png">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Title</title>
+    <link th:href="@{/css/home.css}" rel="stylesheet">
+</head>
+<body>
+    <th:block layout:fragment="mainContent">
+        <div class="container">
+            <div id="newList">
+                <h3>⚡최근 등록된 맛집 New 5</h3>
+                <div id="blocks">
+    
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/js/home.js}"></script>
+    </th:block>
+
+</body>
+</html>

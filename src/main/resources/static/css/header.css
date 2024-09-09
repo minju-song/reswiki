@@ -1,0 +1,33 @@
+/* 모바일 */
+@media (max-width: 479px) {
+    .header {
+        background-color: skyblue;
+    }
+}
+
+/* 데스크탑 */
+@media (min-width: 480px) {
+    .header {
+        max-width: 480px; /* 모바일 화면 너비 */
+        margin: 0 auto; /* 중앙 정렬 */
+    }
+}
+
+/* 헤더 */
+header {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header a {
+    text-decoration-line: none;
+    color: black;
+}
+
+header a h1 {
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+}
