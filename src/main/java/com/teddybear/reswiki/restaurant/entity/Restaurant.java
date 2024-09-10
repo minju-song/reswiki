@@ -2,14 +2,16 @@ package com.teddybear.reswiki.restaurant.entity;
 
 import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Restaurant {
 
     // 가게 ID
@@ -48,13 +50,12 @@ public class Restaurant {
 
 
     public static Restaurant toEntity(RestaurantDto dto) {
-        Restaurant restaurant = new Restaurant();
-        restaurant.setRestaurantName(dto.getRestaurantName());
-        restaurant.setRestaurantTel(dto.getRestaurantTel());
-        restaurant.setRestaurantImg(dto.getRestaurantImg());
-        restaurant.setRestaurantAddr1(dto.getRestaurantAddr1());
-        restaurant.setRestaurantAddr2(dto.getRestaurantAddr2());
-
-        return restaurant;
+        return Restaurant.builder()
+                .restaurantName(dto.getRestaurantName())
+                .restaurantTel(dto.getRestaurantTel())
+                .restaurantImg(dto.getRestaurantImg())
+                .restaurantAddr1(dto.getRestaurantAddr1())
+                .restaurantAddr2(dto.getRestaurantAddr2())
+                .build();
     }
 }

@@ -14,11 +14,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource("classpath:application-test.properties") //test용 properties 파일 설정
 @DataJpaTest
 public class RestaurantServiceTest {
-
 
     @Mock
     private RestaurantRepository restaurantRepository;
@@ -43,7 +44,8 @@ public class RestaurantServiceTest {
 
         Restaurant result = restaurantService.addRestaurant(dto);
 
-        System.out.println(result);
+        assertThat(result.getRestaurantName()).isEqualTo("테스트식당");
+
 
 
 

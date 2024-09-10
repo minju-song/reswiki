@@ -40,13 +40,13 @@ public class RestaurantServiceImpl implements RestaurantService{
     public Restaurant addRestaurant(RestaurantDto dto) {
 
         Restaurant restaurant = Restaurant.toEntity(dto);
-        System.out.println("아이디 : "+restaurant.getRestaurantId());
 
         checkRestaurant(restaurant);
 
         return restaurantRepository.save(restaurant);
     }
 
+    // 가게 중복 체크 (임의로 일단 이름으로 체크)
     private void checkRestaurant(Restaurant restaurant) {
         restaurantRepository.findByRestaurantName(restaurant.getRestaurantName())
                 .ifPresent(r -> {

@@ -25,7 +25,7 @@ public class RestaurantController {
     @GetMapping("/testAdd")
     public void testAdd() {
         RestaurantDto dto = RestaurantDto.builder()
-                .restaurantName("테스트식당")
+                .restaurantName("테스트식당2")
                 .restaurantTel("051-111-1111")
                 .restaurantImg("맛깔정.jpeg")
                 .restaurantAddr1("부산광역시 해운대구")
