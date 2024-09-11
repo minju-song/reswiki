@@ -3,7 +3,7 @@ package com.teddybear.reswiki.restaurant.service;
 import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
 import com.teddybear.reswiki.restaurant.repository.RestaurantRepository;
-import com.teddybear.reswiki.review.repository.ReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,8 @@ public class RestaurantServiceImpl implements RestaurantService{
 
     private final RestaurantRepository restaurantRepository;
 
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, ReviewRepository reviewRepository) {
+    @Autowired
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 

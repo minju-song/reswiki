@@ -4,33 +4,25 @@ import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
 import com.teddybear.reswiki.restaurant.repository.RestaurantRepository;
 import com.teddybear.reswiki.restaurant.service.RestaurantServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource("classpath:application-test.properties") //test용 properties 파일 설정
-@DataJpaTest
+@SpringBootTest
 public class RestaurantServiceTest {
 
-    @Mock
+    @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @InjectMocks
+    @Autowired
     private RestaurantServiceImpl restaurantService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
 
     @Test
@@ -43,6 +35,7 @@ public class RestaurantServiceTest {
                                                         .build();
 
         Restaurant result = restaurantService.addRestaurant(dto);
+        Restaurant result2 = restaurantService.addRestaurant(dto);
 
         assertThat(result.getRestaurantName()).isEqualTo("테스트식당");
 
