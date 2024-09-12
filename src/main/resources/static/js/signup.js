@@ -11,12 +11,12 @@ signupForm.addEventListener('submit', function(e) {
         body : formData
     })
     .then(response => {
-        if (response.ok) {
-            window.location.href = '/'; // 원하는 리다이렉트 URL로 이동
-        } else {
-            // 오류 처리
-            alert('회원 가입에 실패했습니다.');
-        }
+        return response.text();        
+    })
+    .then(data => {
+        window.location.href = data; 
+        // 원하는 리다이렉트 URL로 이동
+
     })
     .catch(error => {
         console.log("Error : ", error);
