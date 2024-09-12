@@ -23,6 +23,11 @@ public class MemberDto {
     // 회원 권한
     private Role memberRole;
 
+    // 소셜
+    private String provider;
+
+    private String providerId;
+
     public static MemberDto toDto(Member m) {
         return MemberDto.builder()
                 .memberId(m.getMemberId())

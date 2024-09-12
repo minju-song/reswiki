@@ -4,8 +4,7 @@ import com.teddybear.reswiki.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +28,13 @@ public class Member {
     @Enumerated(EnumType.STRING)
     @Column(name = "member_role")
     private Role memberRole;
+
+    // 소셜
+    @Column(name = "provider")
+    private String provider;
+
+    @Column(name = "provider_id")
+    private String providerId;
 
     public static Member toEntity(MemberDto dto) {
         return Member.builder()

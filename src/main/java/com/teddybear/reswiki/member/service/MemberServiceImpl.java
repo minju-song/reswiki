@@ -17,8 +17,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     // 회원 중복 체크
-    private void checkMember(Member member) {
-        memberRepository.findByMemberId(member.getMemberId())
+    private void checkMember(String memberId) {
+        memberRepository.findByMemberId(memberId)
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
@@ -30,22 +30,9 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = Member.toEntity(dto);
 
-        checkMember(member);
+        checkMember(member.getMemberId());
 
         return memberRepository.save(member);
     }
 
-    @Override
-    public Member login(MemberDto dto) {
-        memberRepository.findByMemberId(dto.getMemberId())
-                .map(m -> {
-                    if (dto.getMemberPassword().equals(m.getMemberPassword())) {
-                        return m;
-                    } else {
-                        throw new IllegalStateException("비밀번호가 틀렸습니다.");
-                    }
-                })
-                .orElseThrow(() -> new IllegalStateException("없는 회원입니다."));
-        return null;
-    }
 }

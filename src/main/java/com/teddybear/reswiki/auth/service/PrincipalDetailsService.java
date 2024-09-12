@@ -16,10 +16,12 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
 
+    // 시큐리티 세션 내부에 Authentication (얘 내부엔 UserDetails)
+    // 함수 종료 시 @AuthenticationPrincipal 어노테이션이 만들어짐
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberId(username).get();
-
+        System.out.println("아이디 : "+username);
         if(member != null) {
             return new PrincipalDetails(member);
         }
