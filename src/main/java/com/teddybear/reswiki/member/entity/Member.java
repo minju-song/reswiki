@@ -1,10 +1,15 @@
 package com.teddybear.reswiki.member.entity;
 
+import com.teddybear.reswiki.member.dto.MemberDto;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member {
 
     // 회원 아이디 - 이메일
@@ -21,7 +26,16 @@ public class Member {
     private String memberNickname;
 
     // 회원 권한
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_role")
-    private String memberRole;
+    private Role memberRole;
 
+    public static Member toEntity(MemberDto dto) {
+        return Member.builder()
+                .memberId(dto.getMemberId())
+                .memberPassword(dto.getMemberPassword())
+                .memberNickname(dto.getMemberNickname())
+                .memberRole(dto.getMemberRole())
+                .build();
+    }
 }

@@ -1,15 +1,14 @@
 package com.teddybear.reswiki.restaurant.dto;
 
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RestaurantDto {
 

@@ -11,10 +11,10 @@ public class PageController {
     public String home() {return "home/index.html";}
 
     // 로그인
-    @GetMapping("/login")
+    @GetMapping("/loginForm")
     public String login() {return "login/login.html";}
 
     // 회원가입
-    @GetMapping("/signup")
+    @GetMapping("/signupForm")
     public String signup() {return "login/signup.html";}
 }

@@ -1,10 +1,14 @@
 package com.teddybear.reswiki.member.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.teddybear.reswiki.member.entity.Member;
+import com.teddybear.reswiki.member.entity.Role;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberDto {
 
     // 회원 아이디
@@ -17,5 +21,14 @@ public class MemberDto {
     private String memberNickname;
 
     // 회원 권한
-    private String memberRole;
+    private Role memberRole;
+
+    public static MemberDto toDto(Member m) {
+        return MemberDto.builder()
+                .memberId(m.getMemberId())
+                .memberPassword(m.getMemberPassword())
+                .memberNickname(m.getMemberNickname())
+                .memberRole(m.getMemberRole())
+                .build();
+    }
 }

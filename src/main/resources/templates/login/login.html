@@ -11,14 +11,14 @@
 </head>
 <body style="background-color: lightblue;">
     <div class="container">
-        <form class="form">
+        <form class="form" id="loginForm" action="/login" method="post">
             <div class="title" style="display: flex;">
                 <div style="flex: 1;"></div>
                 <div style="flex: 1;">LOGIN</div>
                 <div style="flex: 1;">🏠</div>
             </div>
-            <input class="input" name="email" placeholder="Email" type="email">
-            <input class="input" name="password" placeholder="Password" type="password">
+            <input class="input" id="username" name="username" placeholder="Email" type="email">
+            <input class="input" id="password" name="password" placeholder="Password" type="password">
             <div>
                 <span id="signupBtn">회원가입</span>
             </div>
