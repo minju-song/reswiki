@@ -2,6 +2,7 @@ package com.teddybear.reswiki.member;
 
 import com.teddybear.reswiki.member.dto.MemberDto;
 import com.teddybear.reswiki.member.entity.Member;
+import com.teddybear.reswiki.member.entity.Role;
 import com.teddybear.reswiki.member.service.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class MemberServiceTest {
                 .memberId("aaaa")
                 .memberPassword("aaaa")
                 .memberNickname("aaaa")
-                .memberRole("member")
+                .memberRole(Role.ROLE_USER)
                 .build();
 
         Member result = memberService.joinMember(dto);

@@ -39,7 +39,11 @@ public class SecurityConfig {
                 // 4. 회원가입 자동으로 시키거나 우리 측이 추가정보 받아서 회원가입 시킴
                 // 구글 로그인 되면 엑세스토큰 + 사용자 프로필 받음
                 .userInfoEndpoint()
-                .userService(principalOauth2UserService);
+                .userService(principalOauth2UserService)
+
+                .and()
+                .defaultSuccessUrl("/")
+                .and().headers().frameOptions().sameOrigin()
 
                 ;
 

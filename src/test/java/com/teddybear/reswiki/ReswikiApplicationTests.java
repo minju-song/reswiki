@@ -13,12 +13,13 @@ class ReswikiApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String url = "jdbc:mariadb://svc.sel4.cloudtype.app:31531/reswiki";
-		String username = "root";
-		String pass = "root";
+		String id = "9c1eb3ec967ca14a10ddab8621bdddef";
+		String secret = "E8DxDhZbWlA7Rp3Qvfob5K01WQ554qD3";
+		String redirect = "http://localhost:9892/login/oauth2/code/kakao";
 
-		System.out.println("url - "+jasyptEncoding(url));
-		System.out.println("user - "+jasyptEncoding(username));
+		System.out.println("id - "+jasyptEncoding(id));
+		System.out.println("secret - "+jasyptEncoding(secret));
+		System.out.println("redirect - "+jasyptEncoding(redirect));
 	}
 
 	public String jasyptEncoding(String value) {

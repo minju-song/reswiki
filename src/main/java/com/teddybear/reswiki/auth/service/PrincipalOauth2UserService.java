@@ -1,5 +1,8 @@
 package com.teddybear.reswiki.auth.service;
 
+import com.teddybear.reswiki.auth.entity.GoogleUserInfo;
+import com.teddybear.reswiki.auth.entity.KakaoUserInfo;
+import com.teddybear.reswiki.auth.entity.OAuth2UserInfo;
 import com.teddybear.reswiki.auth.entity.PrincipalDetails;
 import com.teddybear.reswiki.member.entity.Member;
 import com.teddybear.reswiki.member.entity.Role;
@@ -12,6 +15,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -42,12 +46,25 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         System.out.println("getAttributes : "+ oAuth2User.getAttributes());
 
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            System.out.println("구글 로그인");
+            oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        } else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            System.out.println("카카오 로그인");
+            oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
+        } else {
+            oAuth2UserInfo = null;
+        }
+
         // 회원가입 강제 진행
-        String provider = userRequest.getClientRegistration().getRegistrationId();; //google
-        String providerId = oAuth2User.getAttribute("sub");
-        String memberId = provider+"_"+providerId;
+        String provider = oAuth2UserInfo.getProvider(); //google
+        String providerId = oAuth2UserInfo.getProvideId();
+        String memberId = providerId;
         String password = bCryptPasswordEncoder.encode("비밀번호");
-        String memberNickname = oAuth2User.getAttribute("given_name");
+        String memberNickname = oAuth2UserInfo.getNickname();
+
+        System.out.println(provider+" // "+memberId+" // "+password+" // "+memberNickname);
 
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         Member member;
@@ -69,6 +86,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("이미 소셜로 로그인 했었음");
         }
 
-        return new PrincipalDetails(member, oAuth2User.getAttributes());
+        if(provider.equals("kakao")) {
+            return new PrincipalDetails(member, (Map) oAuth2User.getAttributes().get("kakao_account"));
+        }
+        else return new PrincipalDetails(member, oAuth2User.getAttributes());
     }
 }
