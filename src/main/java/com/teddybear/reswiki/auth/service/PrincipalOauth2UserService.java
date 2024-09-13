@@ -1,9 +1,6 @@
 package com.teddybear.reswiki.auth.service;
 
-import com.teddybear.reswiki.auth.entity.GoogleUserInfo;
-import com.teddybear.reswiki.auth.entity.KakaoUserInfo;
-import com.teddybear.reswiki.auth.entity.OAuth2UserInfo;
-import com.teddybear.reswiki.auth.entity.PrincipalDetails;
+import com.teddybear.reswiki.auth.entity.*;
 import com.teddybear.reswiki.member.entity.Member;
 import com.teddybear.reswiki.member.entity.Role;
 import com.teddybear.reswiki.member.repository.MemberRepository;
@@ -54,7 +51,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("카카오 로그인");
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         } else {
-            oAuth2UserInfo = null;
+            System.out.println("네이버 로그인");
+            oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
         }
 
         // 회원가입 강제 진행
@@ -88,6 +86,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if(provider.equals("kakao")) {
             return new PrincipalDetails(member, (Map) oAuth2User.getAttributes().get("kakao_account"));
+        }
+        else if(provider.equals("naver")) {
+            return new PrincipalDetails(member, (Map) oAuth2User.getAttributes().get("response"));
         }
         else return new PrincipalDetails(member, oAuth2User.getAttributes());
     }
