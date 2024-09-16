@@ -80,7 +80,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
         else {
             member = optionalMember.get();
-
             System.out.println("이미 소셜로 로그인 했었음");
         }
 
