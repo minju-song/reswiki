@@ -12,4 +12,7 @@ public interface RestaurantService {
 
     // 가게 등록
     Restaurant addRestaurant(RestaurantDto restaurantDto);
+
+    // 가게 정보
+    RestaurantDto findByRestaurantId(String id);
 }

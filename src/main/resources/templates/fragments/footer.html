@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+    <th:block th:fragment="footerFragment">
+        <span>MENU</span>
+        <a href="/">HOME</a>
+        <a href="/mypage">MY</span>
+    </th:block>
 </body>
 </html>

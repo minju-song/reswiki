@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block layout:fragment="mainContent">
+        <!-- 로그인 X -->
+        <th:block sec:authorize="isAnonymous()">
+            <div style="flex: 1;">
+                <a class="header-user" href="/loginForm">
+                    <!-- <i class="fa-regular fa-user fa-2x" id="icon-user"></i> -->
+                    <!-- <i class="fa-regular fa-circle-user" id="icon-user"></i> -->
+                    <!-- <img src="/img/login/login.png" style="width: 40px;
+        height: 40px;"> -->
+                로그인
+                </a>
+            </div>
+        </th:block>
+
+        <!-- 로그인 O -->
+        <th:block sec:authorize="isAuthenticated()">
+            <div style="flex: 1;">
+                <a class="header-user" href="/logout">
+                    로그아웃
+                    <!-- <i class="fa-solid fa-right-to-bracket" id="icon-logout"></i>	 -->
+                    <!-- <img src="/member/images/logout.png"> -->
+                </a>
+
+                <a class="header-user" href="/mypage" style="margin-left: 2rem">
+                    마이페이지
+                    <!-- <i class="fa-regular fa-user fa-2x" id="icon-user"></i> -->
+                    <!-- <i class="fa-regular fa-circle-user" id="icon-user"></i> -->
+                    <!-- <img src="/member/images/mypage.png"> -->
+                </a>
+            </div>
+
+        </th:block>
+    </th:block>
+
+</body>
+</html>

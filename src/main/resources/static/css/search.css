@@ -1,0 +1,31 @@
+nav {
+    display: flex;
+    align-items: center;
+}
+.searchDiv {
+    display: flex; 
+    align-items: center;
+    height: 100%;
+    background: rgb(245, 246, 248);
+    padding: 0px 12px;
+    border-radius: 100px;
+    flex-grow: 1;
+}
+
+.searchInput {
+    width: 100%;
+    border: 0;
+    background: none;
+    color: rgb(36, 39, 41);
+    caret-color: pink;
+}
+
+/* input:focus-visible {
+    outline-offset: 0px;
+} */
+
+.backIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}

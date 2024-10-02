@@ -1,10 +1,22 @@
 package com.teddybear.reswiki;
 
+import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
+import com.teddybear.reswiki.restaurant.service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
+
+    private final RestaurantService restaurantService;
+
+    @Autowired
+    public PageController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
 
     // 메인 홈
     @GetMapping("/")
@@ -17,4 +29,34 @@ public class PageController {
     // 회원가입
     @GetMapping("/signupForm")
     public String signup() {return "login/signup.html";}
+
+    // 가게 상세 페이지
+    @GetMapping("/restaurantPage")
+    public String restaurantPage(@RequestParam("id") String id, Model model) {
+        RestaurantDto r = restaurantService.findByRestaurantId(id);
+
+        model.addAttribute("restaurant", r);
+
+        System.out.println(r.getRestaurantName());
+
+        return "restaurant/restaurantPage.html";
+    }
+
+    // 가게 추가
+    @GetMapping("/addRestaurantPage")
+    public String addRestaurantPage() {
+        return "restaurant/addRestaurantPage.html";
+    }
+
+    // 마이페이지
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "menu/mypage.html";
+    }
+
+    // 검색 페이지
+    @GetMapping("/searchPage")
+    public String searchPage() {
+        return "menu/search.html";
+    }
 }

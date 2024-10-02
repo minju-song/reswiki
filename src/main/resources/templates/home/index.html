@@ -14,12 +14,37 @@
 </head>
 <body>
     <th:block layout:fragment="mainContent">
+        <nav class="header" style="background-color: gainsboro;">
+            <div style="float: left;">
+                <a class="header--logo" href="/" style="width: auto; height: 47px;">
+                    <h4>맛집위키</h4>
+                </a>
+            </div>
+            <div style="float: right;">
+                <a href="/searchPage">검색</a>
+            </div>
+        </nav>
+
         <div class="container">
+            <!-- <img src="/img/pixel.png"> -->
+            <button onclick="addRestaurant()">새 맛집 등록</button>
             <div id="newList">
                 <h3>⚡최근 등록된 맛집 New 5</h3>
                 <div id="blocks">
     
                 </div>
+            </div>
+            <div>
+                <h1>test</h1>
+            </div>
+            <div>
+                <h1>test</h1>
+            </div>
+            <div>
+                <h1>test</h1>
+            </div>
+            <div>
+                <h1>test</h1>
             </div>
         </div>
 

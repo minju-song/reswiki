@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +54,14 @@ public class RestaurantServiceImpl implements RestaurantService{
                 .ifPresent(r -> {
                     throw new IllegalStateException("이미 존재하는 가게입니다.");
                 });
+    }
+
+    // 가게 정보 가져오기
+    @Override
+    public RestaurantDto findByRestaurantId(String id) {
+        return restaurantRepository.findByRestaurantId(id)
+                .map(RestaurantDto::toDto) // Optional<Restaurant>을 RestaurantDto로 변환
+                .orElseThrow(() -> new NoSuchElementException("해당 가게가 없습니다."));
     }
 
 

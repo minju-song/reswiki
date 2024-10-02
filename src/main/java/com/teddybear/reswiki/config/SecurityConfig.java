@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .csrf().disable()
 
                 .authorizeHttpRequests()
-                .requestMatchers("/write", "/user/**").authenticated()
+                .requestMatchers("/addRestaurantPage", "/user/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

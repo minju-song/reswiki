@@ -6,42 +6,16 @@
 <body>
 <th:block th:fragment="headerFragment">
     <header class="header">
-        <div style="flex: 1;"></div>
-        <div style="flex: 1;">
+        <div style="float: left;">
             <a class="header--logo" href="/" style="width: auto; height: 47px;">
-                <h1>맛 집 위 키</h1>
+                <h4>맛집위키</h4>
             </a>
         </div>
-        <div style="flex: 1;">
-            <button id="loginBtn">Login</button>
+        <div style="float: right;">
+            <button>검색</button>
         </div>
 
-        <!-- 로그인 X -->
-        <th:block sec:authorize="isAnonymous()">
-            <a class="header-user" href="/loginForm">
-                <!-- <i class="fa-regular fa-user fa-2x" id="icon-user"></i> -->
-                <!-- <i class="fa-regular fa-circle-user" id="icon-user"></i> -->
-                <img src="/img/login/login.png" style="width: 40px;
-    height: 40px;">
-            </a>
-        </th:block>
 
-        <!-- 로그인 O -->
-        <th:block sec:authorize="isAuthenticated()">
-            <div>
-                <a class="header-user" href="/logout">
-                    <!-- <i class="fa-solid fa-right-to-bracket" id="icon-logout"></i>	 -->
-                    <img src="/member/images/logout.png">
-                </a>
-
-                <a class="header-user" href="/mypage" style="margin-left: 2rem">
-                    <!-- <i class="fa-regular fa-user fa-2x" id="icon-user"></i> -->
-                    <!-- <i class="fa-regular fa-circle-user" id="icon-user"></i> -->
-                    <img src="/member/images/mypage.png">
-                </a>
-            </div>
-
-        </th:block>
     </header>
 
     <script th:src="@{/js/header.js}"></script>

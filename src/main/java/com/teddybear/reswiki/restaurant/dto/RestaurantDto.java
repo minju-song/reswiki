@@ -13,13 +13,10 @@ import java.time.LocalDateTime;
 public class RestaurantDto {
 
     // 가게 아이디
-    private int restaurantId;
+    private String restaurantId;
 
     // 가게 이름
     private String restaurantName;
-
-    // 가게 주소
-    private String restaurantAddress;
 
     // 가게 등록일
     private LocalDateTime restaurantEnter;
@@ -44,8 +41,10 @@ public class RestaurantDto {
                 .restaurantId(r.getRestaurantId())
                 .restaurantName(r.getRestaurantName())
                 .restaurantAddr1(r.getRestaurantAddr1())
+                .restaurantAddr2(r.getRestaurantAddr2())
                 .restaurantUpdate(r.getRestaurantUpdate())
                 .restaurantImg(r.getRestaurantImg())
+                .restaurantTel(r.getRestaurantTel())
                 .build();
     }
 }

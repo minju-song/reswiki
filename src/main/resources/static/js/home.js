@@ -29,6 +29,8 @@ function getResList() {
 function drawResBlock(restaurant) {
     const resBlock = document.createElement('div');
     resBlock.className = 'resBlock';
+    resBlock.id = restaurant.restaurantId;
+    resBlock.onclick = () => restaurantPage(restaurant.restaurantId);
 
     const resImg = document.createElement('img');
     resImg.className = 'resImg';
@@ -57,3 +59,11 @@ function drawResBlock(restaurant) {
     resBlock.appendChild(resInfo);
     blocks.appendChild(resBlock);
 };
+
+function restaurantPage(id) {
+    window.location.href = "/restaurantPage?id="+id;
+}
+
+function addRestaurant(){
+    window.location.href = "/addRestaurantPage";
+}

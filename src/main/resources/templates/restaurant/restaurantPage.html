@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        (g => {
+            var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
+            b = b[c] || (b[c] = {});
+            var d = b.maps || (b.maps = {}), r = new Set(), e = new URLSearchParams(), u = () => h || (h = new Promise(async (f, n) => {
+                await (a = m.createElement("script"));
+                e.set("libraries", [...r] + "");
+                for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+                e.set("callback", c + ".maps." + q);
+                a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+                d[q] = f;
+                a.onerror = () => h = n(Error(p + " could not load."));
+                a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+                m.head.append(a);
+            }));
+            d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n));
+        })({
+            key: "AIzaSyBvQW-CP5ovvNRqOlCP6YWMc85tEQS839o",
+            v: "weekly",
+            libraries: "places"
+        });
+    </script>
+</head>
+<body>
+    <th:block layout:fragment="mainContent">
+        <div class="container">
+            <div style="display: flex;">
+                <div style="flex: 1; display: flex; justify-content: center;">
+                    <img style="width: 11rem;" th:src="@{'/img/restaurant/' + ${restaurant.restaurantImg}}" id="profile" />
+                </div>
+                <div style="flex: 1;">
+                    <h2>[[${restaurant.restaurantName}]]</h2>
+                </div>
+            </div>
+            <div id="review_taste"></div>
+        </div>
+        <div id="map" hidden></div>
+        <script th:inline="javascript">
+            var map;
+            var service;
+            var infowindow;
+
+            async function initMap() {
+                const { Map, places } = await google.maps.importLibrary("maps");
+                map = new Map(document.getElementById("map"), {
+                    center: { lat: 37.5665, lng: 126.978 },
+                    zoom: 15,
+                });
+
+                const request = {
+                    query: '청춘 양식당',
+                    fields: ['name', 'geometry', 'place_id'],
+                };
+
+                // service = new places.PlacesService(map);
+                service = new google.maps.places.PlacesService(map);
+                // const service = await google.maps.importLibrary("places")
+
+                service.findPlaceFromQuery(request, function (results, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (var i = 0; i < results.length; i++) {
+                            // createMarker(results[i]);
+                            console.log(results[i].place_id);
+                            var request = {
+                                placeId: results[i].place_id,
+                                fields: ['name', 'rating', 'formatted_phone_number', 'geometry', 'formatted_address', 'reviews', 'photos']
+                                };
+
+                                service = new google.maps.places.PlacesService(map);
+                                service.getDetails(request, callback);
+
+                                function callback(place, status) {
+                                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                                    console.log(place);
+                                    // createMarker(place);
+                                }
+                                }
+                        }
+                        map.setCenter(results[0].geometry.location);
+                    } else {
+                        console.error('Place search was not successful due to: ' + status);
+                    }
+                });
+            }
+
+            function createMarker(place) {
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
+            }
+
+            let restaurant = /*[[${restaurant}]]*/ null;
+            let restaurantId = /*[[${restaurant.restaurantId}]]*/ null;
+            let restaurantName = /*[[${restaurant.restaurantName}]]*/ null;
+            let restaurantTel = /*[[${restaurant.restaurantTel}]]*/ null;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                getReviewList();
+                initMap();
+            });
+
+            function getReviewList() {
+                fetch('/review/getReviewList?id=' + restaurantId)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('네트워크 응답 안좋음');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                    });
+            }
+        </script>
+    </th:block>
+</body>
+</html>
