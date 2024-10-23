@@ -1,20 +1,19 @@
 package com.teddybear.reswiki.member.web;
 
 import com.teddybear.reswiki.auth.entity.PrincipalDetails;
-import com.teddybear.reswiki.member.dto.MemberDto;
-import com.teddybear.reswiki.member.entity.Member;
-import com.teddybear.reswiki.member.entity.Role;
+import com.teddybear.reswiki.core.utils.ApiUtils;
+import com.teddybear.reswiki.member.dto.MemberRequest;
+import com.teddybear.reswiki.member.dto.MemberResponse;
 import com.teddybear.reswiki.member.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/member")
 public class MemberController {
 
     @Autowired
@@ -27,18 +26,22 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @PostMapping("/member/join")
-    public ResponseEntity<String> join(MemberDto member) {
+    @GetMapping("/checkMemberId")
+    public ResponseEntity<?> checkMemberId(@RequestParam("checkId") String checkId) {
+        boolean checkMemberId = memberService.checkMember(checkId);
+        ApiUtils.Response<?> result;
+        if(!checkMemberId) result = ApiUtils.success();
+        else result = ApiUtils.error("이미 존재하는 아이디입니다.", 461);
+        return ResponseEntity.ok().body(result);
+    }
 
-        // 비밀번호 암호화
-        String ecnPassword = bCryptPasswordEncoder.encode(member.getMemberPassword());
-        member.setMemberPassword(ecnPassword);
 
-        // 회원 권한 설정
-        member.setMemberRole(Role.ROLE_USER);
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody @Valid MemberRequest.JoinMemberDto member) {
+        System.out.println(member);
+        MemberResponse.JoinMemberDto result = memberService.join(member);
 
-        Member result = memberService.joinMember(member);
-        return ResponseEntity.ok("/loginForm");
+        return ResponseEntity.ok().body(ApiUtils.success(result));
     }
 
     @GetMapping("/member")

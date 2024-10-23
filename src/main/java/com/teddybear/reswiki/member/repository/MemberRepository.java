@@ -12,4 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     // 회원조회
     Optional<Member> findByMemberId(String memberId);
 
+    // 중복체크
+    boolean existsByMemberId(String memberId);
+
 }

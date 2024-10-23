@@ -11,7 +11,8 @@ async function searchResApi() {
             center: { lat: 37.5665, lng: 126.978 },
             zoom: 15,
         });
-    let restaurantName = document.getElementById('restaurantName').value;    console.log(restaurantName);
+    let restaurantName = document.getElementById('restaurantName').value;
+    console.log(restaurantName);
 
     //요청
     let request = {
@@ -35,6 +36,7 @@ async function searchResApi() {
 
                     function callback(place, status) {
                         if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            console.log('나루토', place)
                             // 결과 그려주기
                             drawRes(place);
                         }
@@ -55,6 +57,7 @@ function drawRes(place){
     // 가게 사진
     const resImg = document.createElement('img');
     resImg.setAttribute('src', place.photos[0].getUrl());
+    console.log(place.photos[0].getUrl());
     resImg.className = 'resImg';
 
     // 가게 이름

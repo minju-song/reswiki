@@ -1,4 +1,4 @@
-package com.teddybear.reswiki.config;
+package com.teddybear.reswiki.core;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.jasypt.encryption.StringEncryptor;

@@ -22,6 +22,6 @@ public class ReviewController {
     @GetMapping("review/getReviewList")
     public List<ReviewDto> getReviewList(@RequestParam("id") String id) {
 
-        return reviewService.getReviewList(id);
+        return reviewService.getNewReviewList(id);
     }
 }

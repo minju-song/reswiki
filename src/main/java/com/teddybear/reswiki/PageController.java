@@ -31,16 +31,16 @@ public class PageController {
     public String signup() {return "login/signup.html";}
 
     // 가게 상세 페이지
-    @GetMapping("/restaurantPage")
-    public String restaurantPage(@RequestParam("id") String id, Model model) {
-        RestaurantDto r = restaurantService.findByRestaurantId(id);
-
-        model.addAttribute("restaurant", r);
-
-        System.out.println(r.getRestaurantName());
-
-        return "restaurant/restaurantPage.html";
-    }
+//    @GetMapping("/restaurantPage")
+//    public String restaurantPage(@RequestParam("id") String id, Model model) {
+//        RestaurantDto r = restaurantService.findByRestaurantId(id);
+//
+//        model.addAttribute("restaurant", r);
+//
+//        System.out.println(r.getRestaurantName());
+//
+//        return "restaurant/restaurantPage.html";
+//    }
 
     // 가게 추가
     @GetMapping("/addRestaurantPage")

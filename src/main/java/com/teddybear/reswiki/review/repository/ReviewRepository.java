@@ -12,4 +12,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, String> {
 
     List<Review> findByRestaurantIdAndIsNewest(Restaurant restaurantId, IsNewest isNewest);
+
+    List<Review> findByRestaurantId(Restaurant restaurant);
 }

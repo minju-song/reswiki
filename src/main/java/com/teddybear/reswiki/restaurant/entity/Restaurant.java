@@ -36,7 +36,7 @@ public class Restaurant {
     private String restaurantTel;
 
     // 가게 이미지
-    @Column(name = "restaurant_img")
+    @Column(name = "restaurant_img", columnDefinition = "TEXT")
     private String restaurantImg;
 
     // 가게 주소1
@@ -50,6 +50,7 @@ public class Restaurant {
 
     public static Restaurant toEntity(RestaurantDto dto) {
         return Restaurant.builder()
+                .restaurantId(dto.getRestaurantId())
                 .restaurantName(dto.getRestaurantName())
                 .restaurantTel(dto.getRestaurantTel())
                 .restaurantImg(dto.getRestaurantImg())
