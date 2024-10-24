@@ -2,7 +2,6 @@ package com.teddybear.reswiki.member.service;
 
 import com.teddybear.reswiki.core.errors.exception.Exception400;
 import com.teddybear.reswiki.core.security.JwtProvider;
-import com.teddybear.reswiki.member.dto.MemberDto;
 import com.teddybear.reswiki.member.dto.MemberRequest;
 import com.teddybear.reswiki.member.dto.MemberResponse;
 import com.teddybear.reswiki.member.entity.Member;
@@ -32,22 +31,10 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     // 회원 중복 체크
     @Override
     public boolean checkMember(String memberId) {
-        System.out.println(memberRepository.existsByMemberId(memberId));
         return memberRepository.existsByMemberId(memberId);
     }
 
     // 회원가입
-    @Transactional
-    @Override
-    public Member joinMember(MemberDto dto) {
-
-        Member member = Member.toEntity(dto);
-
-        checkMember(member.getMemberId());
-
-        return memberRepository.save(member);
-    }
-
     @Transactional
     @Override
     public MemberResponse.JoinMemberDto join(MemberRequest.JoinMemberDto requestDto) {
@@ -59,6 +46,9 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
         return new MemberResponse.JoinMemberDto(savedMember);
     }
 
+    // 로그인
+    @Transactional
+    @Override
     public MemberResponse.TokenDto issueJwtByLogin(MemberRequest.LoginMemberDto requestDto) {
         Member member = memberRepository.findByMemberId(requestDto.memberId()).orElseThrow(() ->
                 new Exception400("아이디 혹은 비밀번호가 틀렸습니다."));
@@ -74,9 +64,24 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
         return issueToken(member);
     }
 
+    // 회원 아이디 받아오기
+    @Override
+    public String getMemberId(String id) {
+        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원 조회 불가"));
+        return member.getMemberId();
+    }
+
+    // 회원 정보
+    @Override
+    public MemberResponse.GetMemberDto getMember(String id) {
+        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원이 없습니다."));
+        return new MemberResponse.GetMemberDto(member);
+    }
+
+    // 토큰생성
     private MemberResponse.TokenDto issueToken(Member member) {
-        var access = JwtProvider.createAccess(member);
-        var refresh = JwtProvider.createRefresh(member);
+        String access = JwtProvider.createAccess(member);
+        String refresh = JwtProvider.createRefresh(member);
 
         redisTemplate.opsForValue().set(
                 member.getMemberId().toString(),
