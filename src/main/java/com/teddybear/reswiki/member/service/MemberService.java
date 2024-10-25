@@ -19,4 +19,7 @@ public interface MemberService {
 
     // 마이페이지
     public MemberResponse.GetMemberDto getMember(String id);
+
+    // 로그아웃
+    public void logout(String id);
 }

@@ -78,6 +78,12 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
         return new MemberResponse.GetMemberDto(member);
     }
 
+    // 로그아웃
+    @Override
+    public void logout(String id) {
+        redisTemplate.delete(id.toString());
+    }
+
     // 토큰생성
     private MemberResponse.TokenDto issueToken(Member member) {
         String access = JwtProvider.createAccess(member);

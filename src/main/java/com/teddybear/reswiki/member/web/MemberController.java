@@ -72,6 +72,17 @@ public class MemberController {
                 .body(response);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        memberService.logout(userDetails.getMemberId());
+
+        var responseCookie = createRefreshTokenCookie("", 0);
+
+        var response = ApiUtils.success();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(response);
+    }
+
     // 쿠키 생성
     private static ResponseCookie createRefreshTokenCookie(String refreshToken, int maxAge) {
         return ResponseCookie.from("refreshToken", refreshToken)
