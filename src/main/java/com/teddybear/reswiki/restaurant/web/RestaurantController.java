@@ -18,7 +18,7 @@ public class RestaurantController {
 
     // 메인홈
     @GetMapping
-    public RestaurantResponse.Home restaurants(@RequestParam("size") int size,
+    public RestaurantResponse.Home getRestaurants(@RequestParam("size") int size,
                                                @RequestParam("page") int page){
         return restaurantService.home(size,page);
     }
@@ -26,7 +26,7 @@ public class RestaurantController {
 
     // 식당 검색
     @GetMapping("/search")
-    public RestaurantResponse.Search search(@RequestParam("keyword") String keyword,
+    public RestaurantResponse.Search getSearchRestaurants(@RequestParam("keyword") String keyword,
                                                       @RequestParam("page") int page,
                                                       @RequestParam("size") int size) {
        return restaurantService.search(keyword, page, size);

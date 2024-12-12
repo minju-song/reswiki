@@ -4,6 +4,7 @@ import com.teddybear.reswiki.core.api.response.ApiResponse;
 import com.teddybear.reswiki.core.api.response.ResponseService;
 import com.teddybear.reswiki.core.errors.exception.Exception400;
 import com.teddybear.reswiki.core.errors.exception.Exception401;
+import com.teddybear.reswiki.core.errors.exception.Exception404;
 import com.teddybear.reswiki.core.errors.exception.MemberIdAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +68,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception401.class)
     public ResponseEntity<ApiResponse<?>> handleException401(Exception401 e) {
         ApiResponse<?> errorResponse = responseService.getUnauthorizedResult(e.getMessage());
+
+        return ResponseEntity.status(e.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception404.class)
+    public ResponseEntity<ApiResponse<?>> handleException404(Exception404 e){
+        ApiResponse<?> errorResponse = responseService.getNotFoundResult(e.getMessage());
 
         return ResponseEntity.status(e.status()).body(errorResponse);
     }

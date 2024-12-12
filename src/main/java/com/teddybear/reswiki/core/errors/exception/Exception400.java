@@ -1,6 +1,5 @@
 package com.teddybear.reswiki.core.errors.exception;
 
-import com.teddybear.reswiki.core.api.ApiUtils;
 import com.teddybear.reswiki.member.dto.MemberResponse;
 import org.springframework.http.HttpStatus;
 
@@ -18,5 +17,4 @@ public class Exception400 extends RuntimeException{
 
     public HttpStatus status() { return HttpStatus.BAD_REQUEST; }
 
-    public ApiUtils.Response<?> body() { return ApiUtils.error(getMessage(), memberIdDto, HttpStatus.BAD_REQUEST); }
 }

@@ -32,7 +32,7 @@ public class MemberController {
 
     // 회원가입
     @PostMapping
-    public MemberResponse.MemberIdDto createMember(@RequestBody @Valid MemberRequest.JoinMemberDto member) {
+    public MemberResponse.MemberIdDto postMember(@RequestBody @Valid MemberRequest.JoinMemberDto member) {
 
         MemberResponse.MemberIdDto result = memberService.join(member);
 
@@ -84,27 +84,6 @@ public class MemberController {
                 .build();
     }
 
-
-//    @GetMapping("/myInfo")
-//    public ResponseEntity<?> myInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
-//        return ResponseEntity.ok().body(ApiUtils.success(memberService.getMemberId(userDetails.getMemberId())));
-//    }
-
-
-
-
-
-//    // 마이페이지
-//    @GetMapping("myPage")
-//    public ResponseEntity<?> myPage(@RequestParam("memberId") String memberId) {
-//        return ResponseEntity.ok().body(ApiUtils.success(memberService.getMember(memberId)));
-//    }
-
-//    @GetMapping("/member")
-//    public @ResponseBody String member(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-//        System.out.println("잘 받았니? ->> "+principalDetails.getMember());
-//        return "member";
-//    }
 
 
 }
