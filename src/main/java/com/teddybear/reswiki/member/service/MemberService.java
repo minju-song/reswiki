@@ -14,12 +14,6 @@ public interface MemberService {
     // 로그인 및 토큰 생성
     public MemberResponse.TokenDto issueJwtByLogin(MemberRequest.LoginMemberDto requestDto);
 
-//    // 아이디 받아오기
-//    public String getMemberId(String id);
-//
-//    // 마이페이지
-//    public MemberResponse.MemberInfoDto getMember(String id);
-
     // 로그아웃
     public void logout(String id);
 }

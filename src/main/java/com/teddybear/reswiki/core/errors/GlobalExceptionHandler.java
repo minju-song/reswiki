@@ -3,7 +3,9 @@ package com.teddybear.reswiki.core.errors;
 import com.teddybear.reswiki.core.api.response.ApiResponse;
 import com.teddybear.reswiki.core.api.response.ResponseService;
 import com.teddybear.reswiki.core.errors.exception.Exception400;
+import com.teddybear.reswiki.core.errors.exception.Exception401;
 import com.teddybear.reswiki.core.errors.exception.MemberIdAlreadyExistException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -45,10 +48,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    // 400에러
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<ApiResponse<?>> handle400Exception(Exception400 e) {
         ApiResponse<?> errorResponse = responseService.getBadRequestResult(e.getMessage());
 
         return ResponseEntity.status(e.status()).body(errorResponse);
     }
+
+    // 찾는 데이터가 없을때
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ApiResponse<?>> handleNoSuchElementException(NoSuchElementException e){
+        ApiResponse<?> errorResponse = responseService.getNotFoundResult(e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception401.class)
+    public ResponseEntity<ApiResponse<?>> handleException401(Exception401 e) {
+        ApiResponse<?> errorResponse = responseService.getUnauthorizedResult(e.getMessage());
+
+        return ResponseEntity.status(e.status()).body(errorResponse);
+    }
+
 }

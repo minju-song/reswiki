@@ -3,46 +3,42 @@ package com.teddybear.reswiki.restaurant.service;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
 import com.teddybear.reswiki.restaurant.repository.RestaurantRepository;
-import com.teddybear.reswiki.review.entity.Review;
-import com.teddybear.reswiki.review.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService{
 
-//    @Autowired
-//    private RestaurantRepository restaurantRepository;
-
     private final RestaurantRepository restaurantRepository;
-    private final ReviewRepository reviewRepository;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, ReviewRepository reviewRepository) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.reviewRepository = reviewRepository;
     }
 
-    // 최신 리뷰 등록된 5개의 가게 가져오는 메소드
+    // 메인홈
     @Override
-    public RestaurantResponse.Home getNewList() {
-        List<Restaurant> restaurants = restaurantRepository.findTop5ByOrderByRestaurantUpdateDesc();
+    public RestaurantResponse.Home home(int size, int page) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<Restaurant> restaurants = restaurantRepository.findAllByOrderByRestaurantIdAsc(pageable);
 
         return RestaurantResponse.Home.of(restaurants);
     }
 
-    // 가게 중복 체크 (임의로 일단 이름으로 체크)
-    private void checkRestaurant(Restaurant restaurant) {
-        restaurantRepository.findByRestaurantId(restaurant.getRestaurantId())
-                .ifPresent(r -> {
-                    throw new IllegalStateException("이미 존재하는 가게입니다.");
-                });
+    // 이름으로 가게 검색
+    @Override
+    public RestaurantResponse.Search search(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<Restaurant> restaurantPage = restaurantRepository.findByRestaurantNameContaining(keyword, pageable);
+
+        return RestaurantResponse.Search.from(restaurantPage);
     }
 
 
@@ -53,22 +49,11 @@ public class RestaurantServiceImpl implements RestaurantService{
         Restaurant restaurant = restaurantRepository.findByRestaurantId(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 가게가 없습니다."));
 
-        // 해당 식당의 리뷰를 조회
-        List<Review> reviews = reviewRepository.findByRestaurantId(restaurant);
-
         // GetRestaurant DTO로 변환하여 반환
-        return RestaurantResponse.RestaurantDto.from(restaurant, reviews);
+        return RestaurantResponse.RestaurantDto.from(restaurant);
     }
 
-    // 이름으로 가게 검색
-    @Override
-    public RestaurantResponse.Search search(String keyword, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
 
-        Page<Restaurant> restaurantPage = restaurantRepository.findByRestaurantNameContaining(keyword, pageable);
-
-        return RestaurantResponse.Search.from(restaurantPage);
-    }
 
 
 }

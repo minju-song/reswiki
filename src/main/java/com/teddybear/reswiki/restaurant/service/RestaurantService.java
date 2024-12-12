@@ -5,10 +5,7 @@ import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 public interface RestaurantService {
 
     // 페이지 별 5개의 가게 가져오는 메소드
-    RestaurantResponse.Home getNewList();
-
-    // 가게 등록
-//    Restaurant addRestaurant(RestaurantDto restaurantDto);
+    RestaurantResponse.Home home(int size, int page);
 
     // 가게 정보
     RestaurantResponse.RestaurantDto getRestaurant(String id);

@@ -2,13 +2,14 @@ package com.teddybear.reswiki.core.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teddybear.reswiki.auth.service.PrincipalOauth2UserService;
+import com.teddybear.reswiki.core.api.response.ApiResponse;
 import com.teddybear.reswiki.core.config.Configs;
-import com.teddybear.reswiki.core.errors.exception.Exception401;
 import com.teddybear.reswiki.core.errors.exception.Exception403;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -70,7 +71,7 @@ public class SecurityConfig {
 
         // 7. 요청 권한 설정
         http.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers("/user/**").authenticated() // /member/* 경로는 모두 인증 필요
+                authorize.requestMatchers("/googlePlaces/**").authenticated() // /member/* 경로는 모두 인증 필요
                         .anyRequest().permitAll() // 나머지 요청은 허용
         );
 
@@ -83,11 +84,12 @@ public class SecurityConfig {
         // 10. 인증 실패 처리
         http.exceptionHandling(handling ->
                 handling.authenticationEntryPoint(((request, response, authException) -> {
-                    var e = new Exception401("인증되지 않았습니다."); // 인증 실패 메시지
-                    response.setStatus(e.status().value()); // HTTP 상태 코드 설정
+
+                    ApiResponse<String> apiResponse = new ApiResponse<>(401, "인증되지 않았습니다.");
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value()); // 401 상태 코드 설정
                     response.setContentType("application/json; charset=utf-8");
                     ObjectMapper om = new ObjectMapper();
-                    String responseBody = om.writeValueAsString(e.body()); // json 형식으로 응답 본문 생성
+                    String responseBody = om.writeValueAsString(apiResponse); // json 형식으로 응답 본문 생성
                     response.getWriter().println(responseBody); // 응답 본문 출력
                 })));
 

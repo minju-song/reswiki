@@ -80,21 +80,6 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
         redisTemplate.delete(id.toString());
     }
 
-//    // 회원 아이디 받아오기
-//    @Override
-//    public String getMemberId(String id) {
-//        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원 조회 불가"));
-//        return member.getMemberId();
-//    }
-
-//    // 회원 정보
-//    @Override
-//    public MemberResponse.MemberInfoDto getMember(String id) {
-//        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원이 없습니다."));
-//        return MemberResponse.MemberInfoDto.from(member);
-//    }
-
-
 
     // 토큰생성
     private MemberResponse.TokenDto issueToken(Member member) {

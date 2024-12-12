@@ -1,10 +1,11 @@
 package com.teddybear.reswiki.restaurant.entity;
 
 //import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
-import jakarta.persistence.*;
-import lombok.*;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
 
 @Getter
 @Setter
@@ -23,14 +24,6 @@ public class Restaurant {
     @Column(name = "restaurant_name")
     private String restaurantName;
 
-    // 가게 등록일
-    @Column(name = "restaurant_enter")
-    private LocalDateTime restaurantEnter;
-
-    // 가게 마지막 수정일
-    @Column(name = "restaurant_update")
-    private LocalDateTime restaurantUpdate;
-
     // 가게 전화번호
     @Column(name = "restaurant_tel")
     private String restaurantTel;
@@ -47,15 +40,8 @@ public class Restaurant {
     @Column(name = "restaurant_addr2")
     private String restaurantAddr2;
 
+    // 평균 별점
+    @Column(name = "restaurant_star")
+    private double restaurantStar;
 
-//    public static Restaurant toEntity(RestaurantDto dto) {
-//        return Restaurant.builder()
-//                .restaurantId(dto.getRestaurantId())
-//                .restaurantName(dto.getRestaurantName())
-//                .restaurantTel(dto.getRestaurantTel())
-//                .restaurantImg(dto.getRestaurantImg())
-//                .restaurantAddr1(dto.getRestaurantAddr1())
-//                .restaurantAddr2(dto.getRestaurantAddr2())
-//                .build();
-//    }
 }

@@ -32,12 +32,4 @@ public class Member {
     @Column(name = "provider_id")
     private String providerId;
 
-//    public static Member toEntity(MemberDto dto) {
-//        return Member.builder()
-//                .memberId(dto.getMemberId())
-//                .memberPassword(dto.getMemberPassword())
-//                .memberNickname(dto.getMemberNickname())
-//                .memberRole(dto.getMemberRole())
-//                .build();
-//    }
 }

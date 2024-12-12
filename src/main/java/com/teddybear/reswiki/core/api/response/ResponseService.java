@@ -48,12 +48,12 @@ public class ResponseService {
         return new ApiResponse<>(CommonResponse.BAD_REQUEST.getCode(), message);
     }
 
-    public ApiResponse<?> getNotFoundResult() {
-        return new ApiResponse<>(CommonResponse.NOT_FOUND.getCode(), CommonResponse.NOT_FOUND.getMsg(), null);
+    public ApiResponse<?> getNotFoundResult(String message) {
+        return new ApiResponse<>(CommonResponse.NOT_FOUND.getCode(), message);
     }
 
-    public ApiResponse<?> getUnauthorizedResult() {
-        return new ApiResponse<>(CommonResponse.UNAUTHORIZED.getCode(), CommonResponse.UNAUTHORIZED.getMsg(), null);
+    public ApiResponse<?> getUnauthorizedResult(String message) {
+        return new ApiResponse<>(CommonResponse.UNAUTHORIZED.getCode(), message, null);
     }
 
     public ApiResponse<?> getForbiddenResult() {

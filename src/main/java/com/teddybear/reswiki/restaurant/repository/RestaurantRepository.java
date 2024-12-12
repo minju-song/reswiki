@@ -8,18 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, String> {
 
-    // 최신 업데이트 식당 5개
-    List<Restaurant> findTop5ByOrderByRestaurantUpdateDesc();
+    // 아이디 순으로 페이지네이션하여 모든 레스토랑 가져오기
+    Page<Restaurant> findAllByOrderByRestaurantIdAsc(Pageable pageable);
 
     // 레스토랑 이름으로 검색
-    Page<Restaurant> findByRestaurantName(String restaurantName, Pageable pageable);
-
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantName LIKE LOWER (CONCAT('%', :name, '%'))")
     Page<Restaurant> findByRestaurantNameContaining(@Param("name") String name, Pageable pageable);
 
