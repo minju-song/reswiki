@@ -74,6 +74,7 @@ public class SecurityConfig {
                 authorize
                         .requestMatchers("/api/comments").authenticated() // 댓글 등록 API에 대해 인증 필요
                         .requestMatchers("/googlePlaces/**").authenticated() // /member/* 경로는 모두 인증 필요
+                        .requestMatchers("/api/stars").authenticated()
                         .anyRequest().permitAll() // 나머지 요청은 허용
         );
 
