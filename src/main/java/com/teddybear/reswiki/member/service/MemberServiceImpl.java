@@ -1,6 +1,7 @@
 package com.teddybear.reswiki.member.service;
 
 import com.teddybear.reswiki.core.errors.exception.Exception400;
+import com.teddybear.reswiki.core.errors.exception.MemberIdAlreadyExistException;
 import com.teddybear.reswiki.core.security.JwtProvider;
 import com.teddybear.reswiki.member.dto.MemberRequest;
 import com.teddybear.reswiki.member.dto.MemberResponse;
@@ -31,19 +32,23 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     // 회원 중복 체크
     @Override
     public boolean checkMember(String memberId) {
-        return memberRepository.existsByMemberId(memberId);
+        if (memberRepository.existsByMemberId(memberId)) {
+            // 회원 ID가 이미 존재하는 경우 예외 던지기
+            throw new MemberIdAlreadyExistException("이미 존재하는 아이디입니다 : " + memberId);
+        }
+        return true;
     }
 
     // 회원가입
     @Transactional
     @Override
-    public MemberResponse.JoinMemberDto join(MemberRequest.JoinMemberDto requestDto) {
+    public MemberResponse.MemberIdDto join(MemberRequest.JoinMemberDto requestDto) {
 
         String encodedPassword = passwordEncoder.encode(requestDto.memberPassword());
 
-        Member member = requestDto.createMember(encodedPassword);
+        Member member = requestDto.toMember(encodedPassword);
         Member savedMember = memberRepository.save(member);
-        return new MemberResponse.JoinMemberDto(savedMember);
+        return MemberResponse.MemberIdDto.from(savedMember);
     }
 
     // 로그인
@@ -51,31 +56,22 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     @Override
     public MemberResponse.TokenDto issueJwtByLogin(MemberRequest.LoginMemberDto requestDto) {
         Member member = memberRepository.findByMemberId(requestDto.memberId()).orElseThrow(() ->
-                new Exception400("아이디 혹은 비밀번호가 틀렸습니다."));
+                new Exception400("이메일을 다시 한번 확인해주세요."));
 
-        if (!passwordEncoder.matches(requestDto.memberPassword(), member.getMemberPassword())) {
-            throw new Exception400("아이디 혹은 비밀번호가 틀렸습니다.");
-        }
-
-        if(!member.getMemberRole().canBeLoggedIn()) {
-            throw new Exception400("이메일 인증이 필요합니다.");
-        }
+        validateMember(member, requestDto.memberPassword());
 
         return issueToken(member);
     }
 
-    // 회원 아이디 받아오기
-    @Override
-    public String getMemberId(String id) {
-        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원 조회 불가"));
-        return member.getMemberId();
-    }
+    // 비밀번호 검사
+    private void validateMember(Member member, String password) {
+        if (!passwordEncoder.matches(password, member.getMemberPassword())) {
+            throw new Exception400("비밀번호가 틀렸습니다.");
+        }
 
-    // 회원 정보
-    @Override
-    public MemberResponse.GetMemberDto getMember(String id) {
-        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원이 없습니다."));
-        return new MemberResponse.GetMemberDto(member);
+        if (!member.getMemberRole().canBeLoggedIn()) {
+            throw new Exception400("이메일 인증이 필요합니다.");
+        }
     }
 
     // 로그아웃
@@ -83,6 +79,22 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     public void logout(String id) {
         redisTemplate.delete(id.toString());
     }
+
+//    // 회원 아이디 받아오기
+//    @Override
+//    public String getMemberId(String id) {
+//        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원 조회 불가"));
+//        return member.getMemberId();
+//    }
+
+//    // 회원 정보
+//    @Override
+//    public MemberResponse.MemberInfoDto getMember(String id) {
+//        Member member = memberRepository.findByMemberId(id).orElseThrow(() -> new Exception400("해당 회원이 없습니다."));
+//        return MemberResponse.MemberInfoDto.from(member);
+//    }
+
+
 
     // 토큰생성
     private MemberResponse.TokenDto issueToken(Member member) {

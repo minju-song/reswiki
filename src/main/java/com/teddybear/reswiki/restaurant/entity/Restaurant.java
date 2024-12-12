@@ -1,6 +1,6 @@
 package com.teddybear.reswiki.restaurant.entity;
 
-import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
+//import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,14 +48,14 @@ public class Restaurant {
     private String restaurantAddr2;
 
 
-    public static Restaurant toEntity(RestaurantDto dto) {
-        return Restaurant.builder()
-                .restaurantId(dto.getRestaurantId())
-                .restaurantName(dto.getRestaurantName())
-                .restaurantTel(dto.getRestaurantTel())
-                .restaurantImg(dto.getRestaurantImg())
-                .restaurantAddr1(dto.getRestaurantAddr1())
-                .restaurantAddr2(dto.getRestaurantAddr2())
-                .build();
-    }
+//    public static Restaurant toEntity(RestaurantDto dto) {
+//        return Restaurant.builder()
+//                .restaurantId(dto.getRestaurantId())
+//                .restaurantName(dto.getRestaurantName())
+//                .restaurantTel(dto.getRestaurantTel())
+//                .restaurantImg(dto.getRestaurantImg())
+//                .restaurantAddr1(dto.getRestaurantAddr1())
+//                .restaurantAddr2(dto.getRestaurantAddr2())
+//                .build();
+//    }
 }

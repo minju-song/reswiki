@@ -20,15 +20,12 @@ public class MemberRequest {
             String memberId,
             @NotEmpty @Size(min = 8, max = 64, message = "8자 이상 64자 이하여야 합니다.")
             @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[\\d@#$%^&!])([a-zA-Z\\d@#$%^&!]{8,64})$", message = "영문, 숫자, 특수문자 중 최소 2종류를 포함해야 합니다.")
-            String memberPassword,
-            @Size(max = 40, message = "최대 40자까지 입니다.")
-            String memberNickname
+            String memberPassword
     ) {
-        public Member createMember(String EncodePassword) {
+        public Member toMember(String EncodePassword) {
             return Member.builder()
                     .memberId(memberId)
                     .memberPassword(EncodePassword)
-                    .memberNickname(memberNickname)
                     .memberRole(Role.ROLE_USER)
                     .build();
         }

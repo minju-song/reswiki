@@ -3,20 +3,16 @@ package com.teddybear.reswiki.member.dto;
 import com.teddybear.reswiki.member.entity.Member;
 
 public class MemberResponse {
-    public record GetMemberDto(
-        String memberId,
-        String memberNickname
-    ) {
-        public GetMemberDto(Member member) {
-            this(
-                    member.getMemberId(),
-                    member.getMemberNickname()
+
+    // 멤버 아이디
+    public record MemberIdDto(
+            String id
+    ){
+        public static MemberIdDto from(Member member) {
+            return new MemberIdDto(
+                    member.getMemberId()
             );
         }
-    }
-
-    public record JoinMemberDto(String id){
-        public JoinMemberDto(Member member) { this(member.getMemberId());}
     }
 
     public record TokenDto(String access, String refresh){}

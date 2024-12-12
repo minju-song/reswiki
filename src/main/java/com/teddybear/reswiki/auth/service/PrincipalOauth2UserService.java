@@ -60,9 +60,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String providerId = oAuth2UserInfo.getProvideId();
         String memberId = providerId;
         String password = bCryptPasswordEncoder.encode("비밀번호");
-        String memberNickname = oAuth2UserInfo.getNickname();
 
-        System.out.println(provider+" // "+memberId+" // "+password+" // "+memberNickname);
+        System.out.println(provider+" // "+memberId+" // "+password+" // ");
 
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         Member member;
@@ -70,7 +69,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             member = Member.builder()
                     .memberId(memberId)
                     .memberPassword(password)
-                    .memberNickname(memberNickname)
                     .provider(provider)
                     .providerId(providerId)
                     .memberRole(Role.ROLE_USER)

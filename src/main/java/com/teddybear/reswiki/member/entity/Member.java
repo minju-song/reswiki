@@ -1,6 +1,5 @@
 package com.teddybear.reswiki.member.entity;
 
-import com.teddybear.reswiki.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +19,6 @@ public class Member {
     @Column(name = "member_password")
     private String memberPassword;
 
-    // 회원 닉네임
-    @Column(name = "member_nickname")
-    private String memberNickname;
 
     // 회원 권한
     @Enumerated(EnumType.STRING)
@@ -36,12 +32,12 @@ public class Member {
     @Column(name = "provider_id")
     private String providerId;
 
-    public static Member toEntity(MemberDto dto) {
-        return Member.builder()
-                .memberId(dto.getMemberId())
-                .memberPassword(dto.getMemberPassword())
-                .memberNickname(dto.getMemberNickname())
-                .memberRole(dto.getMemberRole())
-                .build();
-    }
+//    public static Member toEntity(MemberDto dto) {
+//        return Member.builder()
+//                .memberId(dto.getMemberId())
+//                .memberPassword(dto.getMemberPassword())
+//                .memberNickname(dto.getMemberNickname())
+//                .memberRole(dto.getMemberRole())
+//                .build();
+//    }
 }

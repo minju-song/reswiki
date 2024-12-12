@@ -1,6 +1,6 @@
 package com.teddybear.reswiki.core.errors.exception;
 
-import com.teddybear.reswiki.core.utils.ApiUtils;
+import com.teddybear.reswiki.core.api.ApiUtils;
 import org.springframework.http.HttpStatus;
 
 // 404 : 지정한 리소스 찾을 수 없음

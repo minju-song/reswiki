@@ -1,6 +1,5 @@
 package com.teddybear.reswiki.restaurant.service;
 
-import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
 import com.teddybear.reswiki.restaurant.repository.RestaurantRepository;
@@ -32,21 +31,10 @@ public class RestaurantServiceImpl implements RestaurantService{
 
     // 최신 리뷰 등록된 5개의 가게 가져오는 메소드
     @Override
-    public RestaurantResponse.GetNewList getNewList() {
+    public RestaurantResponse.Home getNewList() {
         List<Restaurant> restaurants = restaurantRepository.findTop5ByOrderByRestaurantUpdateDesc();
 
-        return RestaurantResponse.GetNewList.of(restaurants);
-    }
-
-    // 가게 등록
-    @Override
-    public Restaurant addRestaurant(RestaurantDto dto) {
-
-        Restaurant restaurant = Restaurant.toEntity(dto);
-
-        checkRestaurant(restaurant);
-
-        return restaurantRepository.save(restaurant);
+        return RestaurantResponse.Home.of(restaurants);
     }
 
     // 가게 중복 체크 (임의로 일단 이름으로 체크)
@@ -60,7 +48,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 
     // 가게 정보 가져오기
     @Override
-    public RestaurantResponse.GetRestaurant getRestaurant(String id) {
+    public RestaurantResponse.RestaurantDto getRestaurant(String id) {
         // 식당을 ID로 조회
         Restaurant restaurant = restaurantRepository.findByRestaurantId(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 가게가 없습니다."));
@@ -69,7 +57,7 @@ public class RestaurantServiceImpl implements RestaurantService{
         List<Review> reviews = reviewRepository.findByRestaurantId(restaurant);
 
         // GetRestaurant DTO로 변환하여 반환
-        return new RestaurantResponse.GetRestaurant(restaurant, reviews);
+        return RestaurantResponse.RestaurantDto.from(restaurant, reviews);
     }
 
     // 이름으로 가게 검색
@@ -79,7 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 
         Page<Restaurant> restaurantPage = restaurantRepository.findByRestaurantNameContaining(keyword, pageable);
 
-        return RestaurantResponse.Search.of(restaurantPage);
+        return RestaurantResponse.Search.from(restaurantPage);
     }
 
 

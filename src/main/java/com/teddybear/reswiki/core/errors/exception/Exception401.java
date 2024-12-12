@@ -1,6 +1,6 @@
 package com.teddybear.reswiki.core.errors.exception;
 
-import com.teddybear.reswiki.core.utils.ApiUtils;
+import com.teddybear.reswiki.core.api.ApiUtils;
 import org.springframework.http.HttpStatus;
 
 // 401 : 권한 없음

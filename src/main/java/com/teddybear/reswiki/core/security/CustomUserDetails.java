@@ -22,7 +22,7 @@ public record CustomUserDetails(Member member) implements UserDetails {
     public String getPassword() { return member.getMemberPassword(); }
 
     @Override
-    public String getUsername() { return member.getMemberNickname(); }
+    public String getUsername() { return member.getMemberId(); }
 
     @Override
     public boolean isAccountNonExpired() {

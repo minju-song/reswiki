@@ -10,29 +10,29 @@ import java.util.List;
 
 public class RestaurantResponse {
 
-    // 메인홈 새로운 리뷰 등록 리스트
-    public record GetNewList(
-            List<SearchRestaurantDto> restaurants
+    // Restaurant 엔티티를 SimpleRestaurantDto리스트로 변환
+    public record Home(
+            List<SimpleRestaurantDto> restaurants
     ) {
-        public static GetNewList of(List<Restaurant> list) {
-            return new GetNewList(list.stream()
-                    .map(SearchRestaurantDto::new)
+        public static Home of(List<Restaurant> list) {
+            return new Home(list.stream()
+                    .map(SimpleRestaurantDto::from)
                     .toList());
         }
     }
 
     // 검색리스트
     public record Search(
-            List<SearchRestaurantDto> restaurants, // 식당 목록
+            List<SimpleRestaurantDto> restaurants, // 식당 목록
             long totalElements,                // 전체 요소 수
             int totalPages,                    // 전체 페이지 수
             int number,                        // 현재 페이지 번호
             int size
     ) {
-        public static Search of(Page<Restaurant> restaurantPage) {
+        public static Search from(Page<Restaurant> restaurantPage) {
             return new Search(
                     restaurantPage.getContent().stream()
-                            .map(SearchRestaurantDto::new) // Restaurant를 searchRestaurantDto으로 변환
+                            .map(SimpleRestaurantDto::from) // Restaurant를 searchRestaurantDto으로 변환
                             .toList(),
                     restaurantPage.getTotalElements(), // 전체 요소 수
                     restaurantPage.getTotalPages(),     // 전체 페이지 수
@@ -42,15 +42,15 @@ public class RestaurantResponse {
         }
     }
 
-    // 검색
-    public record SearchRestaurantDto(
+    // 간단한 식당 정보
+    public record SimpleRestaurantDto(
             String restaurantId,
             String restaurantName,
             String  restaurantImg,
             String restaurantAddr1
     ) {
-        public SearchRestaurantDto(Restaurant r) {
-            this(
+        public static SimpleRestaurantDto from(Restaurant r) {
+            return new SimpleRestaurantDto(
                     r.getRestaurantId(),
                     r.getRestaurantName(),
                     r.getRestaurantImg(),
@@ -60,7 +60,7 @@ public class RestaurantResponse {
     }
 
     // 식당 상세페이지
-    public record GetRestaurant(
+    public record RestaurantDto(
             String restaurantId,
             String restaurantName,
             LocalDateTime restaurantUpdate,
@@ -68,10 +68,10 @@ public class RestaurantResponse {
             String restaurantImg,
             String restaurantAddr1,
             String restaurantAddr2,
-            List<ReviewResponse.GetReview> reviews
+            List<ReviewResponse.ReviewDto> reviews
     ) {
-        public GetRestaurant(Restaurant r, List<Review> reviews) {
-            this(
+        public static RestaurantDto from(Restaurant r, List<Review> reviews) {
+            return new RestaurantDto(
                     r.getRestaurantId(),
                     r.getRestaurantName(),
                     r.getRestaurantUpdate(),
@@ -80,9 +80,9 @@ public class RestaurantResponse {
                     r.getRestaurantAddr1(),
                     r.getRestaurantAddr2(),
                     reviews.stream()
-                            .map(ReviewResponse.GetReview::new)
+                            .map(ReviewResponse.ReviewDto::from)
                             .toList()
-            );
+                    );
         }
     }
 }

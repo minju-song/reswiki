@@ -1,4 +1,4 @@
-package com.teddybear.reswiki.core.utils;
+package com.teddybear.reswiki.core.api;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,7 +1,6 @@
 package com.teddybear.reswiki.restaurant.web;
 
-import com.teddybear.reswiki.core.utils.ApiUtils;
-import com.teddybear.reswiki.restaurant.dto.RestaurantDto;
+import com.teddybear.reswiki.core.api.ApiUtils;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 import com.teddybear.reswiki.restaurant.service.RestaurantService;
 import com.teddybear.reswiki.review.service.ReviewService;
@@ -28,7 +27,7 @@ public class RestaurantController {
     // 최신 업데이트 식당 리스트
     @GetMapping("/getNewList")
     public ResponseEntity<?> getNewList() {
-        RestaurantResponse.GetNewList getNewList = restaurantService.getNewList();
+        RestaurantResponse.Home getNewList = restaurantService.getNewList();
         ApiUtils.Response<?> result = ApiUtils.success(getNewList);
 
         return ResponseEntity.ok().body(result);
@@ -48,20 +47,20 @@ public class RestaurantController {
     @GetMapping("/getRestaurant")
     public ResponseEntity<?> getRestaurant(@RequestParam("id") String id) {
 
-        RestaurantResponse.GetRestaurant getRestaurant = restaurantService.getRestaurant(id);
+        RestaurantResponse.RestaurantDto getRestaurant = restaurantService.getRestaurant(id);
         ApiUtils.Response<?> result = ApiUtils.success(getRestaurant);
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/testAdd")
-    public void testAdd() {
-        RestaurantDto dto = RestaurantDto.builder()
-                .restaurantName("테스트식당2")
-                .restaurantTel("051-111-1111")
-                .restaurantImg("맛깔정.jpeg")
-                .restaurantAddr1("부산광역시 해운대구")
-                .build();
-
-        restaurantService.addRestaurant(dto);
-    }
+//    @GetMapping("/testAdd")
+//    public void testAdd() {
+//        RestaurantDto dto = RestaurantDto.builder()
+//                .restaurantName("테스트식당2")
+//                .restaurantTel("051-111-1111")
+//                .restaurantImg("맛깔정.jpeg")
+//                .restaurantAddr1("부산광역시 해운대구")
+//                .build();
+//
+//        restaurantService.addRestaurant(dto);
+//    }
 }
