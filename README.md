@@ -21,10 +21,10 @@
   - ![CloudType](https://img.shields.io/badge/Cloud-CloudType-00C4E0)
 
 ## 📄 도출 문서
-- [요구사항 명세서](#https://www.notion.so/1407cdc4a1c380faaf0dda3addf9e844?pvs=4)
-- [DB 설계서](#https://www.notion.so/DB-bb82d002d0de42c2a6928d844d76d4d5?pvs=4) 
-- [API 명세서](#https://www.notion.so/API-486f0e07085b488d894e18d6671b601d?pvs=4)
-- [API 문서](#https://documenter.getpostman.com/view/34639101/2sAYHxmibi)
+- [요구사항 명세서](https://www.notion.so/1407cdc4a1c380faaf0dda3addf9e844?pvs=4)
+- [DB 설계서](https://www.notion.so/DB-bb82d002d0de42c2a6928d844d76d4d5?pvs=4) 
+- [API 명세서](https://www.notion.so/API-486f0e07085b488d894e18d6671b601d?pvs=4)
+- [API 문서](https://documenter.getpostman.com/view/34639101/2sAYHxmibi)
 
 ## 🌟 특징
 1. **Full-Mapping 전략** : 요청 DTO와 응답 DTO를 Record를 활용하여 개별적으로 매핑함으로써 코드의 가독성과 유지보수성을 향상시킴.
