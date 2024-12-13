@@ -54,6 +54,7 @@ public class RestaurantResponse {
             String restaurantName,
             String  restaurantImg,
             String restaurantAddr1,
+            String restaurantAddr2,
             double restaurantStar
     ) {
         public static ListRestaurantDto from(Restaurant r) {
@@ -62,6 +63,7 @@ public class RestaurantResponse {
                     r.getRestaurantName(),
                     r.getRestaurantImg(),
                     r.getRestaurantAddr1(),
+                    r.getRestaurantAddr2(),
                     r.getRestaurantStar()
             );
         }
