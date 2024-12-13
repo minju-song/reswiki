@@ -21,9 +21,9 @@
   - ![CloudType](https://img.shields.io/badge/Cloud-CloudType-00C4E0)
 
 ## 📄 도출 문서
-- [요구사항 명세서](https://www.notion.so/1407cdc4a1c380faaf0dda3addf9e844?pvs=4)
-- [DB 설계서](https://www.notion.so/DB-bb82d002d0de42c2a6928d844d76d4d5?pvs=4) 
-- [API 명세서](https://www.notion.so/API-486f0e07085b488d894e18d6671b601d?pvs=4)
+- [요구사항 명세서](https://continuous-turner-5bb.notion.site/1407cdc4a1c380faaf0dda3addf9e844)
+- [DB 설계서](https://continuous-turner-5bb.notion.site/DB-bb82d002d0de42c2a6928d844d76d4d5) 
+- [API 명세서](https://continuous-turner-5bb.notion.site/API-486f0e07085b488d894e18d6671b601d)
 - [API 문서](https://documenter.getpostman.com/view/34639101/2sAYHxmibi)
 
 ## 🌟 특징
