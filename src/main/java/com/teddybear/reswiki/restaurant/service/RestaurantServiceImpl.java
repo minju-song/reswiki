@@ -24,7 +24,7 @@ public class RestaurantServiceImpl implements RestaurantService{
     // 메인홈
     @Override
     public RestaurantResponse.Home home(int size, int page) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page , size);
 
         Page<Restaurant> restaurants = restaurantRepository.findAllByOrderByRestaurantIdAsc(pageable);
 
@@ -34,7 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService{
     // 이름으로 가게 검색
     @Override
     public RestaurantResponse.Search search(String keyword, int page, int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page, size);
 
         Page<Restaurant> restaurantPage = restaurantRepository.findByRestaurantNameContaining(keyword, pageable);
 

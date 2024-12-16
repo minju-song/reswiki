@@ -49,7 +49,7 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid MemberRequest.LoginMemberDto member) {
-
+        System.out.println(member);
         // access, refresh 토큰
         MemberResponse.TokenDto result = memberService.issueJwtByLogin(member);
 

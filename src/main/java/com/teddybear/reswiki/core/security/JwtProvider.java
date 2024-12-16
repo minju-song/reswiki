@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Component
 public class JwtProvider {
     // 액세스 토큰 만료 시간 = 5분
-    public static final int ACCESS_EXP_SEC = 60 * 5;
+    public static final int ACCESS_EXP_SEC = 60 * 50;
     // refresh 토큰 만료 시간 = 30일
     public static final int REFRESH_EXP_SEC = 60 * 60 * 24 * 30;
     // 토큰 접두사

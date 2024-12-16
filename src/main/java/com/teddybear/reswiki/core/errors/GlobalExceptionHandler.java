@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     private final ResponseService responseService;
 
@@ -27,7 +27,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e) {
-        return responseService.getBadRequestResult(null);
+
+        ApiResponse<?> errorResponse = responseService.getBadRequestResult(e.getMessage());
+
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     // 아이디 중복 체크 예외
