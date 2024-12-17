@@ -95,7 +95,7 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     // 토큰생성
     @Override
     public AuthResponse.TokenDto issueToken(Member member) {
-        System.out.println("member -> "+member);
+
         String access = JwtProvider.createAccess(member);
         String refresh = JwtProvider.createRefresh(member);
 

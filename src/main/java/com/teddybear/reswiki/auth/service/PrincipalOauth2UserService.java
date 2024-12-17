@@ -43,8 +43,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println("getAttributes : "+ oAuth2User.getAttributes());
-
         OAuth2UserInfo oAuth2UserInfo = null;
         if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             System.out.println("구글 로그인");
@@ -62,8 +60,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String providerId = oAuth2UserInfo.getProvideId();
         String memberId = providerId;
         String password = bCryptPasswordEncoder.encode("비밀번호");
-
-        System.out.println(provider+" // "+memberId+" // "+password+" // ");
 
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         Member member;

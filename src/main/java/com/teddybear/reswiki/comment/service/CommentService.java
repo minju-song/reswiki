@@ -12,5 +12,5 @@ public interface CommentService {
     CommentResponse.CommentIdDto createComment(CommentRequest.JoinCommentDto comment);
 
     // 커멘트 삭제
-    boolean deleteComment(int commentId);
+    CommentResponse.CommentIdDto deleteComment(int commentId);
 }

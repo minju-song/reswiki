@@ -59,7 +59,7 @@ public class GooglePlaceController {
                         ResponseEntity<Map> responseDetail = restTemplate.getForEntity(detailUrl, Map.class);
                         //2번
                         Map<String, Object> responseBodyDetail = responseDetail.getBody();
-                        System.out.println(responseBodyDetail);
+
                         // 3단계: "result" Map 가져오기
                         if (responseBodyDetail != null && responseBodyDetail.containsKey("result")) {
                             Map<String, Object> resultDetail = (Map<String, Object>) responseBodyDetail.get("result");

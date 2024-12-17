@@ -67,14 +67,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean deleteComment(int commentId) {
+    public CommentResponse.CommentIdDto deleteComment(int commentId) {
         // 댓글이 존재하는지 확인
         if (!commentRepository.existsById(commentId)) {
             throw new NoSuchElementException("댓글이 존재하지 않습니다.");
         }
 
         commentRepository.deleteById(commentId);
-        return true;
+        return new CommentResponse.CommentIdDto(commentId);
     }
 
 }

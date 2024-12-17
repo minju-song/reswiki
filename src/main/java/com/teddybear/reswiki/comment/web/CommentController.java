@@ -33,7 +33,7 @@ public class CommentController {
 
     // 커멘트 삭제
     @DeleteMapping
-    public boolean deleteComment(@RequestParam("id") int commentId) {
+    public CommentResponse.CommentIdDto deleteComment(@RequestParam("commentId") int commentId) {
         return commentService.deleteComment(commentId);
     }
 }

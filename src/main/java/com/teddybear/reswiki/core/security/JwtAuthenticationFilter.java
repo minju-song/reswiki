@@ -35,7 +35,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         try {
-            System.out.println(jwt+">>");
             // jwt 검증하고 디코딩
             DecodedJWT decodedJWT = JwtProvider.verify(jwt);
 

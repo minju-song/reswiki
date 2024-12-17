@@ -34,7 +34,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String url = makeRedirectUrl(tokenDto.access());
 
         if(response.isCommitted()) {
-            System.out.println("응답");
             return;
         }
         response.setHeader("Authorization", tokenDto.access());
