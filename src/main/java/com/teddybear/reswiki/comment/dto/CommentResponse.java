@@ -2,6 +2,7 @@ package com.teddybear.reswiki.comment.dto;
 
 import com.teddybear.reswiki.comment.entity.Comment;
 import com.teddybear.reswiki.comment.entity.CommentCategory;
+import com.teddybear.reswiki.comment.entity.CommentEmoji;
 import org.springframework.data.domain.Page;
 
 import java.util.Date;
@@ -34,7 +35,8 @@ public class CommentResponse {
             String restaurantId,
             CommentCategory commentCategory,
             String commentContents,
-            Date commentDate
+            Date commentDate,
+            CommentEmoji commentEmoji
     ) {
         public static ListCommentDto from(Comment c) {
             return new ListCommentDto(
@@ -43,7 +45,8 @@ public class CommentResponse {
                     c.getRestaurant().getRestaurantId(),
                     c.getCommentCategory(),
                     c.getCommentContents(),
-                    c.getCommentDate()
+                    c.getCommentDate(),
+                    c.getCommentEmoji()
             );
         }
     }

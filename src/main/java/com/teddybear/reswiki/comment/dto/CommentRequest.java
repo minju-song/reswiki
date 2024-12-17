@@ -1,6 +1,7 @@
 package com.teddybear.reswiki.comment.dto;
 
 import com.teddybear.reswiki.comment.entity.CommentCategory;
+import com.teddybear.reswiki.comment.entity.CommentEmoji;
 import jakarta.validation.constraints.NotEmpty;
 
 public class CommentRequest {
@@ -13,6 +14,8 @@ public class CommentRequest {
             @NotEmpty
             CommentCategory commentCategory,
             @NotEmpty
-            String commentContents
+            String commentContents,
+            @NotEmpty
+            CommentEmoji commentEmoji
     ) {}
 }

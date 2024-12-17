@@ -42,4 +42,8 @@ public class Comment {
 
     @Column(name = "comment_date")
     private Date commentDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "comment_emoji")
+    private CommentEmoji commentEmoji;
 }

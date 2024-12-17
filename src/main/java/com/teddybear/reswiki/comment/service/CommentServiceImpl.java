@@ -60,6 +60,7 @@ public class CommentServiceImpl implements CommentService {
                 .commentCategory(joinCommentDto.commentCategory())
                 .commentContents(joinCommentDto.commentContents())
                 .commentDate(new Date())
+                .commentEmoji(joinCommentDto.commentEmoji())
                 .build();
 
         return CommentResponse.CommentIdDto.from(commentRepository.save(comment));
