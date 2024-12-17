@@ -1,5 +1,6 @@
 package com.teddybear.reswiki.member.service;
 
+import com.teddybear.reswiki.auth.dto.AuthResponse;
 import com.teddybear.reswiki.core.errors.exception.Exception400;
 import com.teddybear.reswiki.core.errors.exception.MemberIdAlreadyExistException;
 import com.teddybear.reswiki.core.security.JwtProvider;
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
     // 로그인
     @Transactional
     @Override
-    public MemberResponse.TokenDto issueJwtByLogin(MemberRequest.LoginMemberDto requestDto) {
+    public AuthResponse.TokenDto issueJwtByLogin(MemberRequest.LoginMemberDto requestDto) {
         Member member = memberRepository.findByMemberId(requestDto.memberId()).orElseThrow(() ->
                 new Exception400("이메일을 다시 한번 확인해주세요."));
 
@@ -80,9 +81,21 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
         redisTemplate.delete(id.toString());
     }
 
+    @Override
+    public MemberResponse.MemberIdDto findMemberId(String memberId) {
+        // 회원 정보를 DB에서 가져오는 서비스 호출
+        MemberResponse.MemberIdDto memberIdDto = memberRepository.findByMemberId(memberId)
+                .map(member -> new MemberResponse.MemberIdDto(member.getMemberId()))
+                .orElseThrow(() -> new Exception400("없는 회원입니다."));
+
+        return  memberIdDto;
+    }
+
 
     // 토큰생성
-    private MemberResponse.TokenDto issueToken(Member member) {
+    @Override
+    public AuthResponse.TokenDto issueToken(Member member) {
+        System.out.println("member -> "+member);
         String access = JwtProvider.createAccess(member);
         String refresh = JwtProvider.createRefresh(member);
 
@@ -93,7 +106,7 @@ public class MemberServiceImpl implements UserDetailsService,MemberService {
                 TimeUnit.SECONDS
         );
 
-        return new MemberResponse.TokenDto(access, refresh);
+        return new AuthResponse.TokenDto(access, refresh);
     }
 
     @Override

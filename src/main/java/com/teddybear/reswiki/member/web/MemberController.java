@@ -1,5 +1,6 @@
 package com.teddybear.reswiki.member.web;
 
+import com.teddybear.reswiki.auth.dto.AuthResponse;
 import com.teddybear.reswiki.core.api.response.ApiResponse;
 import com.teddybear.reswiki.core.api.response.ResponseService;
 import com.teddybear.reswiki.core.security.CustomUserDetails;
@@ -51,7 +52,7 @@ public class MemberController {
     public ResponseEntity<?> login(@RequestBody @Valid MemberRequest.LoginMemberDto member) {
         System.out.println(member);
         // access, refresh 토큰
-        MemberResponse.TokenDto result = memberService.issueJwtByLogin(member);
+        AuthResponse.TokenDto result = memberService.issueJwtByLogin(member);
 
         // refresh토큰 저장할 쿠키 생성
         ResponseCookie responseCookie = createRefreshTokenCookie("", 0);
@@ -63,7 +64,7 @@ public class MemberController {
                 .body(response);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
         memberService.logout(userDetails.getMemberId());
 
@@ -72,6 +73,14 @@ public class MemberController {
         ApiResponse<?> response = new ApiResponse<>(ResponseService.CommonResponse.SUCCESS.getCode(), ResponseService.CommonResponse.SUCCESS.getMsg(), null);
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(response);
+    }
+
+    @GetMapping("/myInfo")
+    public MemberResponse.MemberIdDto getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        MemberResponse.MemberIdDto memberIdDto = memberService.findMemberId(userDetails.getMemberId());
+
+        return memberIdDto;
     }
 
     // 쿠키 생성

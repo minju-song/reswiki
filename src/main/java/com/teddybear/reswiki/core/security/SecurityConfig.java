@@ -2,6 +2,7 @@ package com.teddybear.reswiki.core.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teddybear.reswiki.auth.service.PrincipalOauth2UserService;
+import com.teddybear.reswiki.auth.web.CustomAuthenticationSuccessHandler;
 import com.teddybear.reswiki.core.api.response.ApiResponse;
 import com.teddybear.reswiki.core.config.Configs;
 import com.teddybear.reswiki.core.errors.exception.Exception403;
@@ -28,6 +29,9 @@ public class SecurityConfig {
     // PrincipalOauth2UserService를 주입
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     // 비밀번호 인코더 Bean 설정
 //    @Bean
@@ -66,6 +70,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo ->
                                 userInfo.userService(principalOauth2UserService) // 사용자 정보 서비스 설정
                         )
+                        .successHandler(customAuthenticationSuccessHandler)
 //                        .defaultSuccessUrl("http://localhost:3000/") // 리다이렉트
         );
 
@@ -75,6 +80,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/comments").authenticated() // 댓글 등록 API에 대해 인증 필요
                         .requestMatchers("/googlePlaces/**").authenticated()
                         .requestMatchers("/api/stars").authenticated()
+                        .requestMatchers("/api/members/myInfo").authenticated()
                         .requestMatchers("/api/images/**").permitAll()
                         .anyRequest().permitAll() // 나머지 요청은 허용
         );

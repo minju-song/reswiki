@@ -35,12 +35,15 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         try {
+            System.out.println(jwt+">>");
             // jwt 검증하고 디코딩
             DecodedJWT decodedJWT = JwtProvider.verify(jwt);
 
             // jwt에서 사용자 아이디랑 role 가져옴
             String id = decodedJWT.getClaim("id").asString();
             Role role = decodedJWT.getClaim("role").as(Role.class);
+
+
 
             // 멤버 객체 생성
             Member member = Member.builder()

@@ -23,6 +23,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
 
+
+
     @Autowired
     public PrincipalOauth2UserService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;

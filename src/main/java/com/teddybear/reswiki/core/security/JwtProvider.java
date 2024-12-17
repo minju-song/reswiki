@@ -53,6 +53,7 @@ public class JwtProvider {
 
     // JWT 검증 메소드
     public static DecodedJWT verify(String jwt) {
+        System.out.println(jwt);
         // 접두사 제거
         return JWT.require(Algorithm.HMAC512(secret)).build()
                 .verify(jwt.replace(TOKEN_PREFIX, ""));

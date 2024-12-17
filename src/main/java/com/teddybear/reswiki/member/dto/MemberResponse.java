@@ -15,5 +15,4 @@ public class MemberResponse {
         }
     }
 
-    public record TokenDto(String access, String refresh){}
 }
