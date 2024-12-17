@@ -1,5 +1,6 @@
 package com.teddybear.reswiki.restaurant.service;
 
+import com.teddybear.reswiki.restaurant.dto.RestaurantRequest;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 import com.teddybear.reswiki.restaurant.entity.Restaurant;
 import com.teddybear.reswiki.restaurant.repository.RestaurantRepository;
@@ -39,6 +40,13 @@ public class RestaurantServiceImpl implements RestaurantService{
         Page<Restaurant> restaurantPage = restaurantRepository.findByRestaurantNameContaining(keyword, pageable);
 
         return RestaurantResponse.Search.from(restaurantPage);
+    }
+
+    @Override
+    public RestaurantResponse.RestaurantIdDto joinRestaurant(RestaurantRequest.JoinRestaurantDto joinRestaurantDto) {
+        Restaurant restaurant = restaurantRepository.save(joinRestaurantDto.toRestaurant());
+
+        return new RestaurantResponse.RestaurantIdDto(restaurant.getRestaurantId());
     }
 
 

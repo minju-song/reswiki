@@ -1,5 +1,6 @@
 package com.teddybear.reswiki.restaurant.web;
 
+import com.teddybear.reswiki.restaurant.dto.RestaurantRequest;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 import com.teddybear.reswiki.restaurant.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class RestaurantController {
     public RestaurantResponse.RestaurantDto getRestaurant(@PathVariable("id") String id) {
 
         return restaurantService.getRestaurant(id);
+    }
+
+    // 식당 추가
+    @PostMapping
+    public RestaurantResponse.RestaurantIdDto joinRestaurant(@RequestBody RestaurantRequest.JoinRestaurantDto restaurantDto) {
+        return restaurantService.joinRestaurant(restaurantDto);
     }
 
 }

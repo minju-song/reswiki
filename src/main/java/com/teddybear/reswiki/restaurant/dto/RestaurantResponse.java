@@ -91,4 +91,9 @@ public class RestaurantResponse {
             );
         }
     }
+
+    public record RestaurantIdDto (
+            String restaurantId
+    ) {
+    }
 }

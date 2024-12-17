@@ -78,7 +78,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize ->
                 authorize
                         .requestMatchers("/api/comments").authenticated() // 댓글 등록 API에 대해 인증 필요
-                        .requestMatchers("/googlePlaces/**").authenticated()
+                        .requestMatchers("/api/googlePlaces/**").authenticated()
                         .requestMatchers("/api/stars").authenticated()
                         .requestMatchers("/api/members/myInfo").authenticated()
                         .requestMatchers("/api/images/**").permitAll()

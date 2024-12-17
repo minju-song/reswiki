@@ -1,5 +1,6 @@
 package com.teddybear.reswiki.restaurant.service;
 
+import com.teddybear.reswiki.restaurant.dto.RestaurantRequest;
 import com.teddybear.reswiki.restaurant.dto.RestaurantResponse;
 
 public interface RestaurantService {
@@ -12,4 +13,6 @@ public interface RestaurantService {
 
     // 가게 검색
     RestaurantResponse.Search search(String keyword, int page, int size);
+
+    RestaurantResponse.RestaurantIdDto joinRestaurant(RestaurantRequest.JoinRestaurantDto joinRestaurantDto);
 }
